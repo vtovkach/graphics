@@ -19,3 +19,8 @@ void CrossProduct(const vec3d &vec1, const vec3d &vec2, vec3d &o)
     o.y = (vec1.z * vec2.x) - (vec1.x * vec2.z);
     o.z = (vec1.x * vec2.y) - (vec1.y * vec2.x);
 }
+
+float DotProduct(const vec3d &vec1, const vec3d &vec2)
+{
+    return (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z + vec2.z); 
+}
