@@ -14,7 +14,7 @@ int main() {
     mat4x4 matProj, matRotZ, matRotX; 
     mesh meshCube;
 
-    vec3d vCamera; 
+    vec3d vCamera = {0, 0, 0}; 
 
     float fTheta = 0; 
 
@@ -125,7 +125,10 @@ int main() {
             normal.y /= normal_len;
             normal.z /= normal_len;
 
-            if(normal.z < 0)
+            //if(normal.z < 0)
+            if(normal.x * (triTranslated.vertices[0].x - vCamera.x) + 
+               normal.y * (triTranslated.vertices[0].y - vCamera.y) +
+               normal.z * (triTranslated.vertices[0].z - vCamera.z) < 0.0)
             {
                 // Project triangles 3D -> 2D
                 MultiplyMatrixVector(triTranslated.vertices[0], triProjected.vertices[0], matProj);
