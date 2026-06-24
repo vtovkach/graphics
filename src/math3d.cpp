@@ -12,3 +12,10 @@ void MultiplyMatrixVector(vec3d &i, vec3d &o, mat4x4 &m)
         o.x /= w; o.y /= w; o.z /= w;
     }
 }
+
+void CrossProduct(const vec3d &vec1, const vec3d &vec2, vec3d &o)
+{
+    o.x = (vec1.y * vec2.z) - (vec1.z * vec2.y);
+    o.y = (vec1.z * vec2.x) - (vec1.x * vec2.z);
+    o.z = (vec1.x * vec2.y) - (vec1.y * vec2.x);
+}
