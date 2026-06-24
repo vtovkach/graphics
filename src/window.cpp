@@ -62,13 +62,14 @@ void Window::drawTriangle(vec3d vertex1, vec3d vertex2, vec3d vertex3)
     drawLine(vertex2.x, vertex2.y, vertex3.x, vertex3.y);
 }
 
-void Window::drawPixel(int x, int y)
+void Window::drawPixel(int x, int y, float brightness)
 {
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    int shade = brightness * 255;
+    SDL_SetRenderDrawColor(renderer, shade, shade, shade, 255);
     SDL_RenderPoint(renderer, x, y);
 }
 
-void Window::fillTriangle(vec3d v1, vec3d v2, vec3d v3)
+void Window::fillTriangle(vec3d v1, vec3d v2, vec3d v3, float brightness)
 {
     auto edge = [](vec3d a, vec3d b, vec3d c)
     {
@@ -94,7 +95,7 @@ void Window::fillTriangle(vec3d v1, vec3d v2, vec3d v3)
             if ((w1 >= 0 && w2 >= 0 && w3 >= 0) ||
                 (w1 <= 0 && w2 <= 0 && w3 <= 0))
             {
-                drawPixel(x, y);
+                drawPixel(x, y, brightness);
             }
         }
     }

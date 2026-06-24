@@ -130,6 +130,20 @@ int main() {
                normal.y * (triTranslated.vertices[0].y - vCamera.y) +
                normal.z * (triTranslated.vertices[0].z - vCamera.z) < 0.0)
             {
+                vec3d light_direction = {0.0f, 0.0f, -1.0f}; 
+                float light_mag = sqrtf((light_direction.x * light_direction.x) + 
+                                        (light_direction.y * light_direction.y) + 
+                                        (light_direction.z * light_direction.z));
+                light_direction.x /= light_mag;
+                light_direction.y /= light_mag;
+                light_direction.z /= light_mag;
+
+                float brightness =  (light_direction.x * normal.x) + 
+                                    (light_direction.y * normal.y) + 
+                                    (light_direction.z * normal.z);
+                if(brightness > 1.0f) brightness = 1.0f;
+                if(brightness < 0.0f) brightness = 0.0f; 
+
                 // Project triangles 3D -> 2D
                 MultiplyMatrixVector(triTranslated.vertices[0], triProjected.vertices[0], matProj);
                 MultiplyMatrixVector(triTranslated.vertices[1], triProjected.vertices[1], matProj);
@@ -147,7 +161,7 @@ int main() {
                 triProjected.vertices[2].x *= 0.5f * (float)WIDTH;
                 triProjected.vertices[2].y *= 0.5f * (float)HEIGHT;
 
-                win.fillTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2]);
+                win.fillTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2], brightness);
             }
         }
  
