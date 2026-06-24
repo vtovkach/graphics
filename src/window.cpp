@@ -62,6 +62,44 @@ void Window::drawTriangle(vec3d vertex1, vec3d vertex2, vec3d vertex3)
     drawLine(vertex2.x, vertex2.y, vertex3.x, vertex3.y);
 }
 
+void Window::drawPixel(int x, int y)
+{
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderPoint(renderer, x, y);
+}
+
+void Window::fillTriangle(vec3d v1, vec3d v2, vec3d v3)
+{
+    auto edge = [](vec3d a, vec3d b, vec3d c)
+    {
+        return (c.x - a.x) * (b.y - a.y) - 
+            (c.y - a.y) * (b.x - a.x);
+    };
+
+    int minX = (int)std::min({v1.x, v2.x, v3.x});
+    int maxX = (int)std::max({v1.x, v2.x, v3.x});
+    int minY = (int)std::min({v1.y, v2.y, v3.y});
+    int maxY = (int)std::max({v1.y, v2.y, v3.y});
+
+    for (int y = minY; y <= maxY; y++)
+    {
+        for (int x = minX; x <= maxX; x++)
+        {
+            vec3d p = {(float)x, (float)y, 0.0f};
+
+            float w1 = edge(v2, v3, p);
+            float w2 = edge(v3, v1, p);
+            float w3 = edge(v1, v2, p);
+
+            if ((w1 >= 0 && w2 >= 0 && w3 >= 0) ||
+                (w1 <= 0 && w2 <= 0 && w3 <= 0))
+            {
+                drawPixel(x, y);
+            }
+        }
+    }
+}
+
 void Window::present()
 {
     SDL_RenderPresent(renderer);

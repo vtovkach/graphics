@@ -147,7 +147,7 @@ int main() {
                 triProjected.vertices[2].x *= 0.5f * (float)WIDTH;
                 triProjected.vertices[2].y *= 0.5f * (float)HEIGHT;
 
-                win.drawTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2]);
+                win.fillTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2]);
             }
         }
  
