@@ -14,6 +14,8 @@ int main() {
     mat4x4 matProj, matRotZ, matRotX; 
     mesh meshCube;
 
+    vec3d vCamera; 
+
     float fTheta = 0; 
 
     while(win.isRunning()){
@@ -85,36 +87,65 @@ int main() {
         {
             triangle triProjected, triTranslated, triRotatedZ, triRotatedZX;
 
+            // Rotate in Z axis 
             MultiplyMatrixVector(tri.vertices[0], triRotatedZ.vertices[0], matRotZ);
             MultiplyMatrixVector(tri.vertices[1], triRotatedZ.vertices[1], matRotZ);
             MultiplyMatrixVector(tri.vertices[2], triRotatedZ.vertices[2], matRotZ);
 
+            // Rotate in X axis 
             MultiplyMatrixVector(triRotatedZ.vertices[0], triRotatedZX.vertices[0], matRotX);
             MultiplyMatrixVector(triRotatedZ.vertices[1], triRotatedZX.vertices[1], matRotX);
             MultiplyMatrixVector(triRotatedZ.vertices[2], triRotatedZX.vertices[2], matRotX);
 
+            // Offset into the screen
             triTranslated = triRotatedZX;
             triTranslated.vertices[0].z = triRotatedZX.vertices[0].z + 3.0f;
             triTranslated.vertices[1].z = triRotatedZX.vertices[1].z + 3.0f;
             triTranslated.vertices[2].z = triRotatedZX.vertices[2].z + 3.0f;
 
-            MultiplyMatrixVector(triTranslated.vertices[0], triProjected.vertices[0], matProj);
-            MultiplyMatrixVector(triTranslated.vertices[1], triProjected.vertices[1], matProj);
-            MultiplyMatrixVector(triTranslated.vertices[2], triProjected.vertices[2], matProj);
+            vec3d normal, line1, line2;
 
-            // Scale into view
-            triProjected.vertices[0].x += 1.0f; triProjected.vertices[0].y += 1.0f; 
-            triProjected.vertices[1].x += 1.0f; triProjected.vertices[1].y += 1.0f; 
-            triProjected.vertices[2].x += 1.0f; triProjected.vertices[2].y += 1.0f; 
+            line1.x = triTranslated.vertices[1].x - triTranslated.vertices[0].x;
+            line1.y = triTranslated.vertices[1].y - triTranslated.vertices[0].y;
+            line1.z = triTranslated.vertices[1].z - triTranslated.vertices[0].z;
 
-            triProjected.vertices[0].x *= 0.5f * (float)WIDTH;
-            triProjected.vertices[0].y *= 0.5f * (float)HEIGHT;
-            triProjected.vertices[1].x *= 0.5f * (float)WIDTH;
-            triProjected.vertices[1].y *= 0.5f * (float)HEIGHT;
-            triProjected.vertices[2].x *= 0.5f * (float)WIDTH;
-            triProjected.vertices[2].y *= 0.5f * (float)HEIGHT;
+            line2.x = triTranslated.vertices[2].x - triTranslated.vertices[0].x;
+            line2.y = triTranslated.vertices[2].y - triTranslated.vertices[0].y;
+            line2.z = triTranslated.vertices[2].z - triTranslated.vertices[0].z;
 
-            win.drawTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2]);
+            CrossProduct(line1, line2, normal);
+
+            float normal_len = sqrtf(
+                normal.x * normal.x +
+                normal.y * normal.y +
+                normal.z * normal.z
+            );
+
+            normal.x /= normal_len;
+            normal.y /= normal_len;
+            normal.z /= normal_len;
+
+            if(normal.z < 0)
+            {
+                // Project triangles 3D -> 2D
+                MultiplyMatrixVector(triTranslated.vertices[0], triProjected.vertices[0], matProj);
+                MultiplyMatrixVector(triTranslated.vertices[1], triProjected.vertices[1], matProj);
+                MultiplyMatrixVector(triTranslated.vertices[2], triProjected.vertices[2], matProj);
+
+                // Normalize coordinates [-1, 1] -> [WIDTH, HEIGHT]
+                triProjected.vertices[0].x += 1.0f; triProjected.vertices[0].y += 1.0f; 
+                triProjected.vertices[1].x += 1.0f; triProjected.vertices[1].y += 1.0f; 
+                triProjected.vertices[2].x += 1.0f; triProjected.vertices[2].y += 1.0f; 
+
+                triProjected.vertices[0].x *= 0.5f * (float)WIDTH;
+                triProjected.vertices[0].y *= 0.5f * (float)HEIGHT;
+                triProjected.vertices[1].x *= 0.5f * (float)WIDTH;
+                triProjected.vertices[1].y *= 0.5f * (float)HEIGHT;
+                triProjected.vertices[2].x *= 0.5f * (float)WIDTH;
+                triProjected.vertices[2].y *= 0.5f * (float)HEIGHT;
+
+                win.drawTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2]);
+            }
         }
  
         win.present();
