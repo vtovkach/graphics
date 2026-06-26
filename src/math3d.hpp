@@ -12,16 +12,6 @@ struct mat4x4
     float m[4][4] = { 0 };
 };
 
-struct triangle
-{
-    vec3d vertices[3];
-};
-
-struct mesh
-{
-    std::vector<triangle> tris; 
-};
-
 void MultiplyMatrixVector(vec3d &i, vec3d &o, mat4x4 &m);
 
 void CrossProduct(const vec3d &vec1, const vec3d &vec2, vec3d &o);
