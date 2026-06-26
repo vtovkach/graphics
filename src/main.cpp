@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 #include "math3d.hpp"
 #include "window.hpp"
@@ -9,6 +10,12 @@
 constexpr Uint32 DELAY = 16;
 constexpr float WIDTH = 800;
 constexpr float HEIGHT = 600;
+
+struct trianglesToDraw
+{
+    triangle tri;
+    float brightness; 
+};
 
 int main() {
     Window win("Renderer", WIDTH, HEIGHT);
@@ -91,6 +98,8 @@ int main() {
 		matRotX.m[2][2] = cosf(fTheta * 0.5f);
 		matRotX.m[3][3] = 1;
 
+        std::vector<trianglesToDraw> vecTriangleToRaster; 
+
         // Draw Triangles
         for(auto tri : meshCube.tris)
         {
@@ -170,10 +179,33 @@ int main() {
                 triProjected.vertices[2].x *= 0.5f * (float)WIDTH;
                 triProjected.vertices[2].y *= 0.5f * (float)HEIGHT;
 
-                win.fillTriangle(triProjected.vertices[0], triProjected.vertices[1], triProjected.vertices[2], brightness);
+                trianglesToDraw triToDraw; 
+                triToDraw.tri = triProjected;
+                triToDraw.brightness = brightness;
+
+                vecTriangleToRaster.push_back(triToDraw);
             }
         }
- 
+
+        // Sort triangles from back to front
+        sort(vecTriangleToRaster.begin(), vecTriangleToRaster.end(), [](trianglesToDraw &t1, trianglesToDraw &t2)
+        {
+            triangle tri1 = t1.tri;
+            triangle tri2 = t2.tri;
+
+            float z1 = (tri1.vertices[0].z + tri1.vertices[1].z + tri1.vertices[2].z) / 3.0f; 
+            float z2 = (tri2.vertices[0].z + tri2.vertices[1].z + tri2.vertices[2].z) / 3.0f;
+            
+            return z1 > z2;
+        });
+
+        for(auto &triProjected : vecTriangleToRaster)
+        {
+            // Rasterize triangle 
+            win.fillTriangle(triProjected.tri.vertices[0], triProjected.tri.vertices[1], triProjected.tri.vertices[2], triProjected.brightness);
+        }
+
+
         win.present();
         SDL_Delay(16);
     }
