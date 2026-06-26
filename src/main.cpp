@@ -4,6 +4,7 @@
 
 #include "math3d.hpp"
 #include "window.hpp"
+#include "mesh.hpp"
 
 constexpr Uint32 DELAY = 16;
 constexpr float WIDTH = 800;
@@ -11,17 +12,24 @@ constexpr float HEIGHT = 600;
 
 int main() {
     Window win("Renderer", WIDTH, HEIGHT);
-    mat4x4 matProj, matRotZ, matRotX; 
+
+    mat4x4 matProj = {0};
+    mat4x4 matRotZ = {0}; 
+    mat4x4 matRotX = {0}; 
+
     mesh meshCube;
 
     vec3d vCamera = {0, 0, 0}; 
 
-    float fTheta = 0; 
+    float fTheta = 0;
+
+    meshCube.LoadFromObjFile("res/VideoShip.obj");
 
     while(win.isRunning()){
         win.handleEvents();
         win.clear();
 
+        /*
         // 3D CUBE 
         meshCube.tris = 
         {
@@ -49,7 +57,8 @@ int main() {
             { 1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f },
             { 1.0f, 0.0f, 1.0f,    0.0f, 0.0f, 0.0f,    1.0f, 0.0f, 0.0f },
         };
-
+        */
+        
         // Projection Matrix 
         float fNear = 0.1f;
         float fFar = 1000.0f;
@@ -99,9 +108,9 @@ int main() {
 
             // Offset into the screen
             triTranslated = triRotatedZX;
-            triTranslated.vertices[0].z = triRotatedZX.vertices[0].z + 3.0f;
-            triTranslated.vertices[1].z = triRotatedZX.vertices[1].z + 3.0f;
-            triTranslated.vertices[2].z = triRotatedZX.vertices[2].z + 3.0f;
+            triTranslated.vertices[0].z = triRotatedZX.vertices[0].z + 8.0f;
+            triTranslated.vertices[1].z = triRotatedZX.vertices[1].z + 8.0f;
+            triTranslated.vertices[2].z = triRotatedZX.vertices[2].z + 8.0f;
 
             vec3d normal, line1, line2;
 
