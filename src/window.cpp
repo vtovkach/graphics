@@ -63,10 +63,10 @@ bool Window::isActive() const
     return active;
 }
 
-void Window::drawScreen(const std::vector<uint32_t>& framebuffer)
+void Window::drawScreen(const uint32_t *framebuffer)
 {
     // Update the texture 
-    SDL_UpdateTexture(texture, nullptr, framebuffer.data(), width * sizeof(uint32_t));
+    SDL_UpdateTexture(texture, nullptr, framebuffer, width * sizeof(uint32_t));
 
     // Apply texture to the screen
     SDL_RenderClear(renderer);

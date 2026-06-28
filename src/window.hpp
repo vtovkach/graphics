@@ -12,7 +12,7 @@ public:
     ~Window();
 
     void handleEvents();
-    void drawScreen(const std::vector<std::uint32_t>& framebuffer);
+    void drawScreen(const uint32_t *framebuffer);
 
     bool isActive() const;
 
