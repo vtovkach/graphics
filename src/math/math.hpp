@@ -1,0 +1,32 @@
+#pragma once 
+
+constexpr float pi = 3.14159265359;
+
+struct Vec4
+{
+    float x = 0;
+    float y = 0;
+    float z = 0;
+    float w = 0; 
+};
+
+class Mat4
+{
+public:
+    Mat4();
+
+    void setElement(int row, int column, float data);
+
+    Mat4 operator*(const Mat4& other) const; 
+    Mat4 operator+(const Mat4& other) const; 
+    
+    static Mat4 translate(float x, float y, float z);
+    static Mat4 scale(float sx, float sy, float sz);
+    static Mat4 rotationX(float theta);
+    static Mat4 rotationY(float theta);
+    static Mat4 rotationZ(float theta);
+
+private:
+    int n = 4; 
+    float mat4[4][4];
+};
