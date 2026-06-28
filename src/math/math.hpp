@@ -25,6 +25,8 @@ public:
     static Mat4 rotationX(float theta);
     static Mat4 rotationY(float theta);
     static Mat4 rotationZ(float theta);
+    static Mat4 viewportTransform(int width, int height);
+    static Mat4 projectionTransform(float fov, float aspectRatio, float fNear, float fFar);
 
 private:
     int n = 4; 

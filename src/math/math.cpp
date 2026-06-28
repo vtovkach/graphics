@@ -124,3 +124,36 @@ Mat4 Mat4::operator+(const Mat4& other) const
 
     return result;
 }
+
+Mat4 Mat4::projectionTransform(float fov, float aspectRatio, float fNear, float fFar)
+{
+    Mat4 projection;
+
+    float fFovRad = 1.0f / tanf(fov * 0.5f * pi / 180.0f);
+
+    projection.setElement(0, 0, aspectRatio * fFovRad);
+    projection.setElement(1, 1, fFovRad);
+    projection.setElement(2, 2, fFar / (fFar - fNear));
+    projection.setElement(2, 3, (-fFar * fNear) / (fFar - fNear));
+    projection.setElement(3, 2, 1.0f);
+    projection.setElement(3, 3, 0.0f);
+
+    return projection;
+}
+
+Mat4 Mat4::viewportTransform(int width, int height)
+{
+    Mat4 viewport; 
+
+    float widthRatio = 0.5 * width; 
+    float heightRatio = 0.5 * height;
+
+    viewport.setElement(0, 0, widthRatio);
+    viewport.setElement(0, 3, widthRatio);
+    viewport.setElement(1, 1, heightRatio);
+    viewport.setElement(1, 3, heightRatio);
+    viewport.setElement(2, 2, 1);
+    viewport.setElement(3, 3, 1);
+
+    return viewport;
+}
