@@ -2,7 +2,7 @@
 
 #include "window.hpp"
 #include "renderer.hpp"
-#include "sceneManager.hpp"
+#include "scene.hpp"
 
 class PlayGround
 {
@@ -16,5 +16,5 @@ public:
 private:
     Window window; 
     Renderer renderer;     
-    SceneManager sceneManager; 
+    Scene activeScene;  
 };
