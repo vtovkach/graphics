@@ -1,14 +1,6 @@
 #include "window.hpp"
 #include <stdexcept>
 
-constexpr const char* DEFAULT_TITLE = "Renderer";
-constexpr int DEFAULT_WIDTH = 800;
-constexpr int DEFAULT_HEIGHT = 600;
-
-Window::Window() : Window(DEFAULT_TITLE, DEFAULT_WIDTH, DEFAULT_HEIGHT)
-{
-}
-
 Window::Window(const char *title, int width, int height) : width(width), height(height)
 {
     if(!SDL_Init(SDL_INIT_VIDEO)){

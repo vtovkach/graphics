@@ -8,7 +8,6 @@
 class Window
 {
 public:
-    Window();
     explicit Window(const char* title, int width, int height);
     ~Window();
 
