@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include <stdexcept>
 
 constexpr const char* DEFAULT_TITLE = "Renderer";
 constexpr int DEFAULT_WIDTH = 800;
@@ -70,7 +71,7 @@ bool Window::isActive() const
     return active;
 }
 
-void Window::drawScreen(std::vector<uint32_t>& framebuffer)
+void Window::drawScreen(const std::vector<uint32_t>& framebuffer)
 {
     // Update the texture 
     SDL_UpdateTexture(texture, nullptr, framebuffer.data(), width * sizeof(uint32_t));

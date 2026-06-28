@@ -1,19 +1,19 @@
 #pragma once
 
 #include <SDL3/SDL.h>
-#include <stdexcept>
-#include <vector>
+
 #include <cstdint>
+#include <vector>
 
 class Window
 {
 public:
     Window();
-    Window(const char* title, int width, int height);
+    explicit Window(const char* title, int width, int height);
     ~Window();
 
     void handleEvents();
-    void drawScreen(std::vector<std::uint32_t>& framebuffer);
+    void drawScreen(const std::vector<std::uint32_t>& framebuffer);
 
     bool isActive() const;
 
@@ -22,8 +22,8 @@ private:
     SDL_Renderer* renderer = nullptr;
     SDL_Texture* texture = nullptr;
 
-    int width;
-    int height;
+    int width = 0;
+    int height = 0;
 
     bool active = true;
 };
