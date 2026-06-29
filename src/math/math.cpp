@@ -21,6 +21,11 @@ void Mat4::setElement(int row, int column, float data)
     mat4[row][column] = data;
 }
 
+float Mat4::getElement(int row, int column)
+{
+    return mat4[row][column];
+}
+
 Mat4 Mat4::translate(float x, float y, float z)
 {
     Mat4 translateTransform;
@@ -194,4 +199,14 @@ Mat4 Mat4::convertVectors(Vec4 a, Vec4 b, Vec4 c)
         res.setElement(i, 2, c[i]);
     }
     return res; 
+}
+
+void Mat4::toVectors(Vec4& a, Vec4& b, Vec4& c)
+{
+    for(int i = 0; i < 4; i++)
+    {
+        a[i] = getElement(i, 0);
+        b[i] = getElement(i, 1);
+        c[i] = getElement(i, 2);
+    }
 }
