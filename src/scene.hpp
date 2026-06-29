@@ -12,6 +12,8 @@ public:
     Lighting& getLighting();
     Camera& getCamera();
 
+    void addObject(Object3D obj);
+
 private:
     std::vector<Object3D> objects; 
     Lighting light; 

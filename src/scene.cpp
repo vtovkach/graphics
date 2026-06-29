@@ -14,3 +14,8 @@ Camera& Scene::getCamera()
 {
     return camera;
 }
+
+void Scene::addObject(Object3D obj)
+{
+    objects.push_back(obj);
+}
