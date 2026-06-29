@@ -97,6 +97,9 @@ void Renderer::renderObject(Object3D& obj, Camera& camera, Lighting& light)
         triangleMatrix = projectionTransform * triangleMatrix;
         triangleMatrix = viewportTransform * triangleMatrix;
 
+        // Perspective Divide 
+        // TODO
+
         // Take lighting into account (dot product)
         // TODO 
         // ... 

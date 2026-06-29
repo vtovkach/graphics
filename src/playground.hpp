@@ -4,12 +4,15 @@
 #include "renderer.hpp"
 #include "scene.hpp"
 
+#include <string>
+
 class PlayGround
 {
 public:
     PlayGround();
     explicit PlayGround(const char *title, int width, int height);
-    ~PlayGround();
+
+    void addObject(std::string objectPath, Vec4 initPosition);
 
     void run();
 

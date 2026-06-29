@@ -39,3 +39,11 @@ void PlayGround::run()
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     }
 }
+
+void PlayGround::addObject(std::string objectPath, Vec4 initPosition)
+{
+    Object3D obj(objectPath);
+    obj.setObjPos(initPosition.x, initPosition.y, initPosition.z);
+
+    activeScene.addObject(obj);
+}

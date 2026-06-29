@@ -33,7 +33,6 @@ class Renderer
 {
 public:
     explicit Renderer(int width, int height);
-    ~Renderer();
 
     void renderObject(Object3D& obj, Camera& camera, Lighting& light);
 
