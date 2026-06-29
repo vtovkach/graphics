@@ -1,5 +1,18 @@
 #include <cmath>
+#include <stdexcept>
 #include "math.hpp"
+
+float& Vec4::operator[](int i)
+{
+    switch(i)
+    {
+        case 0: return x;
+        case 1: return y;
+        case 2: return z;
+        case 3: return w;
+        default: throw std::out_of_range("Vec4 index");
+    }
+}
 
 Mat4::Mat4() : mat4{}{};
 
@@ -156,4 +169,29 @@ Mat4 Mat4::viewportTransform(int width, int height)
     viewport.setElement(3, 3, 1);
 
     return viewport;
+}
+
+Mat4 Mat4::convertVectors(Vec4 a, Vec4 b, Vec4 c, Vec4 d)
+{
+    Mat4 res; 
+    for(int i = 0; i < 4; i++)
+    {
+        res.setElement(i, 0, a[i]);
+        res.setElement(i, 1, b[i]);
+        res.setElement(i, 2, c[i]);
+        res.setElement(i, 3, d[i]);
+    }
+    return res; 
+}
+
+Mat4 Mat4::convertVectors(Vec4 a, Vec4 b, Vec4 c)
+{
+    Mat4 res; 
+    for(int i = 0; i < 4; i++)
+    {
+        res.setElement(i, 0, a[i]);
+        res.setElement(i, 1, b[i]);
+        res.setElement(i, 2, c[i]);
+    }
+    return res; 
 }

@@ -8,6 +8,8 @@ struct Vec4
     float y = 0;
     float z = 0;
     float w = 0; 
+
+    float& operator[](int i);
 };
 
 class Mat4
@@ -20,6 +22,9 @@ public:
     Mat4 operator*(const Mat4& other) const; 
     Mat4 operator+(const Mat4& other) const; 
     
+    static Mat4 convertVectors(Vec4 a, Vec4 b, Vec4 c, Vec4 d);
+    static Mat4 convertVectors(Vec4 a, Vec4 b, Vec4 c);
+
     static Mat4 translate(float x, float y, float z);
     static Mat4 scale(float sx, float sy, float sz);
     static Mat4 rotationX(float theta);
