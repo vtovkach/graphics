@@ -2,6 +2,8 @@
 
 #include <vector>
 #include <cstdint>
+#include <algorithm>
+#include <cmath>
 
 #include "object3D.hpp"
 #include "camera.hpp"
@@ -36,8 +38,8 @@ public:
     void renderObject(Object3D& obj, Camera& camera, Lighting& light);
 
     void drawPixel(int x, int y, Color color, float brightness);
-    void drawLine();
-    void fillTriangle();  
+    void drawLine(Vec4 A, Vec4 B, Color color);
+    void fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightness);  
     std::vector<Pixel>& getFrameBuffer();
 
 private:
@@ -51,6 +53,4 @@ private:
 
     Mat4 projectionTransform;
     Mat4 viewportTransform;
-
-    void renderTriangle();
 };
