@@ -45,9 +45,11 @@ Object3D::Object3D(const std::string& objPath)
         }
     }
 
-    position = {0, 0, 0, 0};
-    rotation = {0, 0, 0, 0};
+    position = {0, 0, 0, 1};
+    rotation = {0, 0, 0, 1};
     scale = {1, 1, 1, 1};
+
+    this->updateModelTransform();
 }
 
 Object3D::Object3D(Mesh& mesh)
@@ -56,6 +58,8 @@ Object3D::Object3D(Mesh& mesh)
     position = {0, 0, 0, 0};
     rotation = {0, 0, 0, 0};
     scale = {1, 1, 1, 1};
+
+    this->updateModelTransform();
 }
 
 void Object3D::setObjPos(float x, float y, float z)
@@ -99,8 +103,8 @@ void Object3D::rotateObject(float thetaX, float thetaY, float thetaZ)
 void Object3D::updateModelTransform()
 {
     Mat4 rotationTransformX = Mat4::rotationX(rotation.x);
-    Mat4 rotationTransformY = Mat4::rotationX(rotation.y);
-    Mat4 rotationTransformZ = Mat4::rotationX(rotation.z);
+    Mat4 rotationTransformY = Mat4::rotationY(rotation.y);
+    Mat4 rotationTransformZ = Mat4::rotationZ(rotation.z);
     Mat4 scaleTransform = Mat4::scale(scale.x, scale.y, scale.z);
     Mat4 translateTransform = Mat4::translate(position.x, position.y, position.z);
 
