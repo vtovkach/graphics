@@ -41,6 +41,9 @@ public:
     void fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightness);  
     std::vector<Pixel>& getFrameBuffer();
 
+    void clearFrameBuffer();
+    void clearDepthBuffer();
+
 private:
     int width; 
     int height;
@@ -49,6 +52,7 @@ private:
     float fFar;
 
     std::vector<Pixel> frameBuffer;
+    std::vector<float> depthBuffer;
 
     Mat4 projectionTransform;
     Mat4 viewportTransform;
