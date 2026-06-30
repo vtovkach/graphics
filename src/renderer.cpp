@@ -22,6 +22,7 @@ Renderer::Renderer(int width, int height)
       fFar(DEFAULT_FAR)
 {
     frameBuffer.resize(width * height, Pixel());
+    depthBuffer.resize(width * height);
 }
 
 void Renderer::drawPixel(int x, int y, Color color, float brightness)

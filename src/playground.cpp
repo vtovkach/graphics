@@ -24,10 +24,13 @@ void PlayGround::run()
     {   
         Camera camera = activeScene.getCamera();
         Lighting light = activeScene.getLighting();        
-        std::vector<Object3D> objects = activeScene.getObjects();
-        
+        std::vector<Object3D>& objects = activeScene.getObjects();
+
+        renderer.clearFrameBuffer();
+        renderer.clearDepthBuffer();
         for(auto& obj : objects)
         {
+            obj.rotateObject(0.0f, 1.0f, 0.5f);
             renderer.renderObject(obj, camera, light);
         }
 
