@@ -9,7 +9,12 @@ struct Vec4
     float z = 0;
     float w = 0; 
 
+    const float& operator[](int i) const;
     float& operator[](int i);
+
+    static Vec4 normalizeVec(Vec4 a);
+    static Vec4 crossProduct(Vec4 a, Vec4 b);
+    static float dotProduct(Vec4 a, Vec4 b);
 };
 
 class Mat4
@@ -21,6 +26,8 @@ public:
     float getElement(int row, int column);
 
     Mat4 operator*(const Mat4& other) const; 
+    Vec4 operator*(const Vec4& other) const;
+     
     Mat4 operator+(const Mat4& other) const; 
     
     void toVectors(Vec4& a, Vec4& b, Vec4& c);
