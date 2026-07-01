@@ -7,6 +7,6 @@
 int main() 
 {   
     PlayGround app;
-    app.addObject("res/VideoShip.obj", {0, 0, 10});
+    app.addObject("res/teapot.obj", {0, 0, 8});
     app.run();
 }
