@@ -115,7 +115,7 @@ void Renderer::renderObject(Object3D& obj, Camera& camera, Lighting& light)
         Vec4 cameraDir = {camera.camera.x - vertexA.x, camera.camera.y - vertexA.y, camera.camera.z - vertexA.z, 0.0f};
         cameraDir = Vec4::normalizeVec(cameraDir);
         float dot = Vec4::dotProduct(triangle.norm, cameraDir);
-        if(dot > 0) continue;
+        if(dot <= 0) continue;
 
         // Take lighting into account
         Vec4 lightDir = {
