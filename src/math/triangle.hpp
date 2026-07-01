@@ -1,7 +1,6 @@
 #pragma once
 
-#include <vector>
-#include "math.hpp"
+#include "vec4.hpp"
 
 struct Triangle
 {
@@ -9,9 +8,4 @@ struct Triangle
     Vec4 norm; 
 
     Triangle(Vec4 A, Vec4 B, Vec4 C);
-};
-
-struct Mesh
-{
-    std::vector<Triangle> triangles; 
 };

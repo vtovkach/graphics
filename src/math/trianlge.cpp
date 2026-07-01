@@ -1,4 +1,4 @@
-#include "geometry.hpp"
+#include "math.hpp"
 
 Triangle::Triangle(Vec4 A, Vec4 B, Vec4 C)
 {

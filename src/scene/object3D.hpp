@@ -1,7 +1,7 @@
 #pragma once 
 
 #include <string>
-#include "geometry.hpp"
+#include "math.hpp"
 
 class Object3D
 {
