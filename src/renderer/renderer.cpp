@@ -103,14 +103,14 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
     Mat4 modelTransform = obj.getModelTransform();
     Mesh objMesh = obj.getObjectMesh();
 
-    projectionTransform = Mat4::projectionTransform(
+    projectionTransform = Transform::projectionTransform(
         fov, 
         static_cast<float>(width) / static_cast<float>(height), 
         fNear, 
         fFar
     );
 
-    viewportTransform = Mat4::viewportTransform(width, height);
+    viewportTransform = Transform::viewportTransform(width, height);
 
     for(auto& triangle : objMesh.triangles)
     {

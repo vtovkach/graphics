@@ -102,11 +102,11 @@ void Object3D::rotateObject(float thetaX, float thetaY, float thetaZ)
 // Used privately after any changes to the object's position 
 void Object3D::updateModelTransform()
 {
-    Mat4 rotationTransformX = Mat4::rotationX(rotation.x);
-    Mat4 rotationTransformY = Mat4::rotationY(rotation.y);
-    Mat4 rotationTransformZ = Mat4::rotationZ(rotation.z);
-    Mat4 scaleTransform = Mat4::scale(scale.x, scale.y, scale.z);
-    Mat4 translateTransform = Mat4::translate(position.x, position.y, position.z);
+    Mat4 rotationTransformX = Transform::rotationX(rotation.x);
+    Mat4 rotationTransformY = Transform::rotationY(rotation.y);
+    Mat4 rotationTransformZ = Transform::rotationZ(rotation.z);
+    Mat4 scaleTransform = Transform::scale(scale.x, scale.y, scale.z);
+    Mat4 translateTransform = Transform::translate(position.x, position.y, position.z);
 
     this->modelTransform = translateTransform * scaleTransform * rotationTransformX * rotationTransformY * rotationTransformZ;
 }
