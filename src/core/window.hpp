@@ -21,8 +21,8 @@ private:
     SDL_Renderer* renderer = nullptr;
     SDL_Texture* texture = nullptr;
 
-    int width = 0;
-    int height = 0;
+    int width;
+    int height;
 
     bool active = true;
 };

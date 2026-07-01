@@ -14,8 +14,8 @@ public:
     void changeObjSize(float x, float y, float z);
     void rotateObject(float thetaX, float thetaY, float thetaZ);
 
-    Mesh getObjectMesh();
-    Mat4 getModelTransform();
+    Mesh getObjectMesh() const;
+    Mat4 getModelTransform() const;
 
 private:
     Mesh object; 

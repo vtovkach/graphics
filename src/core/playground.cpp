@@ -10,12 +10,10 @@ constexpr int SLEEP_TIME = 16; // 60FPS
 
 PlayGround::PlayGround() : window(DEFAULT_TITLE, DEFAULT_WIDTH, DEFAULT_HEIGHT), renderer(DEFAULT_WIDTH, DEFAULT_HEIGHT)
 {
-
 }
 
 PlayGround::PlayGround(const char *title, int width, int height) : window(title, width, height), renderer(width ,height)
 {
-
 }
 
 void PlayGround::run()

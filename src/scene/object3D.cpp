@@ -111,12 +111,12 @@ void Object3D::updateModelTransform()
     this->modelTransform = translateTransform * scaleTransform * rotationTransformX * rotationTransformY * rotationTransformZ;
 }
 
-Mesh Object3D::getObjectMesh()
+Mesh Object3D::getObjectMesh() const
 {
     return object;
 }
 
-Mat4 Object3D::getModelTransform()
+Mat4 Object3D::getModelTransform() const
 {
     return modelTransform;
 }
