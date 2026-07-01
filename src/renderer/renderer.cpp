@@ -23,10 +23,24 @@ Renderer::Renderer(int width, int height)
 {
     frameBuffer.resize(width * height, Pixel());
     depthBuffer.resize(width * height);
+    this->clearDepthBuffer();
+}
+
+void Renderer::clearFrameBuffer()
+{
+    std::fill(frameBuffer.begin(), frameBuffer.end(), Pixel());
+}
+
+void Renderer::clearDepthBuffer()
+{
+    std::fill(depthBuffer.begin(), depthBuffer.end(), std::numeric_limits<float>::infinity());
 }
 
 void Renderer::drawPixel(int x, int y, Color color, float brightness)
 {
+    if(x >= width || y >= height || x < 0 || y < 0) 
+        return; 
+
     Pixel pixel = {
         .r = static_cast<uint8_t>(color.r * brightness),
         .g = static_cast<uint8_t>(color.g * brightness),
@@ -38,7 +52,6 @@ void Renderer::drawPixel(int x, int y, Color color, float brightness)
 
 void Renderer::drawLine(Vec4 A, Vec4 B, Color color)
 {
-
 }
 
 void Renderer::fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightness)
@@ -48,8 +61,13 @@ void Renderer::fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightnes
     int minY = (int)std::floor(std::min({A.y, B.y, C.y}));
     int maxY = (int)std::ceil(std::max({A.y, B.y, C.y}));
 
+    minX = std::max(minX, 0);
+    maxX = std::min(maxX, width - 1);
+    minY = std::max(minY, 0);
+    maxY = std::min(maxY, height - 1);
+
     float ABCarea = triArea(A, B, C); 
-    if(ABCarea == 1e-6f) return; // Degenerate triangle
+    if(ABCarea < 1e-6f) return; // Degenerate triangle
 
     for(int x = minX; x < maxX; x++)
     {
@@ -62,7 +80,7 @@ void Renderer::fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightnes
             float gamma = triArea(A, B, P) / ABCarea;
 
             if(alpha < 0.0f || beta < 0.0f || gamma < 0.0f) 
-                continue;  // Point is not inside triangle
+                continue;  // Point is not inside a triangle
 
             // Depth Test
             float z = alpha * A.z + beta * B.z + gamma * C.z;
@@ -75,12 +93,12 @@ void Renderer::fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightnes
     }
 }
 
-std::vector<Pixel>& Renderer::getFrameBuffer()
+const std::vector<Pixel>& Renderer::getFrameBuffer() const 
 {
     return frameBuffer;
 }
 
-void Renderer::renderObject(Object3D& obj, Camera& camera, Lighting& light)
+void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lighting& light)
 {
     Mat4 modelTransform = obj.getModelTransform();
     Mesh objMesh = obj.getObjectMesh();
@@ -161,14 +179,4 @@ void Renderer::renderObject(Object3D& obj, Camera& camera, Lighting& light)
 
         fillTriangle(vertexA, vertexB, vertexC, {255, 255, 255}, lightDot);
     }
-}
-
-void Renderer::clearFrameBuffer()
-{
-    std::fill(frameBuffer.begin(), frameBuffer.end(), Pixel());
-}
-
-void Renderer::clearDepthBuffer()
-{
-    std::fill(depthBuffer.begin(), depthBuffer.end(), std::numeric_limits<float>::infinity());
 }
