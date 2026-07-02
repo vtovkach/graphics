@@ -9,9 +9,3 @@
 #include "triangle.hpp"
 
 constexpr float pi = 3.14159265359;
-
-/* Move somewhere else later */
-struct Mesh
-{
-    std::vector<Triangle> triangles; 
-};

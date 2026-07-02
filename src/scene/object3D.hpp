@@ -3,6 +3,11 @@
 #include <string>
 #include "math.hpp"
 
+struct Mesh
+{
+    std::vector<Triangle> triangles; 
+};
+
 class Object3D
 {
 public:
