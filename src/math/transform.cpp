@@ -1,5 +1,20 @@
 #include "math.hpp"
 
+Mat4 Transform::formMatrix(const Vec4& a, const Vec4& b, const Vec4& c)
+{
+    Mat4 res; 
+
+    for(int i = 0; i < 4; i++)
+    {
+        res.setElement(i, 0, a[i]);
+        res.setElement(i, 1, b[i]);
+        res.setElement(i, 2, c[i]);
+        /* 4th column is skipped */
+    }
+
+    return res; 
+}
+
 Mat4 Transform::projectionTransform(float fov, float aspectRatio, float fNear, float fFar)
 {
     Mat4 projection;

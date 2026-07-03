@@ -4,6 +4,8 @@
 
 namespace Transform
 {
+    Mat4 formMatrix(const Vec4& a, const Vec4& b, const Vec4& c);
+
     Mat4 translateTransform(float x, float y, float z);
 
     Mat4 scaleTransform(float sx, float sy, float sz);
