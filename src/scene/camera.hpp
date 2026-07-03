@@ -5,5 +5,8 @@
 class Camera
 {
 public:
-    Vec4 camera = {0, 0, 0, 0}; 
+    bool doesTriangleFaceCamera(Triangle tri) const;
+
+private:
+    Vec4 cameraPosition = {0, 0, 0, 0}; 
 };
