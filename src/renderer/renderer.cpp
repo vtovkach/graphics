@@ -14,6 +14,22 @@ namespace
         return  ((B.x - A.x) * (C.y - A.y)) - 
                 ((B.y - A.y) * (C.x - A.x));
     }  
+
+    void perspectiveDivide(Triangle& tri)
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            float w = tri.vertices[i].w;
+
+            if(w == 0.0f)
+                continue;
+
+            tri.vertices[i].x /= w;
+            tri.vertices[i].y /= w;
+            tri.vertices[i].z /= w;
+            tri.vertices[i].w = 1.0f;
+        }
+    }
 }
 
 Renderer::Renderer(int width, int height) 
