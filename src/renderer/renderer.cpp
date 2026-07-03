@@ -167,10 +167,30 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
 
     viewportTransform = Transform::viewportTransform(width, height);
 
-    for(auto& triangle : objMesh.triangles)
+    for(auto triangle : objMesh.triangles)
     {
         auto triangleRenderingTimeStart = std::chrono::steady_clock::now();
 
+        triangle.transform(modelTransform);
+
+        // Back-face culling 
+        if(!camera.doesTriangleFaceCamera(triangle)) 
+            continue;
+
+        // Compute lighting 
+        float brightness = light.computerBrightness(triangle);
+
+        // Projection transform
+        triangle.transform(projectionTransform);
+        perspectiveDivide(triangle);
+        triangle.updateState();
+
+        // Viewport transform
+        triangle.transform(viewportTransform);
+
+        fillTriangle(triangle[0], triangle[1], triangle[2], {255, 255, 255}, brightness);
+        
+        /*
         Vec4 vertexA = triangle.vertices[0];
         Vec4 vertexB = triangle.vertices[1];
         Vec4 vertexC = triangle.vertices[2];
@@ -179,6 +199,7 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
         vertexA = modelTransform * vertexA;
         vertexB = modelTransform * vertexB;
         vertexC = modelTransform * vertexC;
+        
 
         // Recompute normal 
         triangle.norm = Vec4::normalizeVec(Vec4::crossProduct(
@@ -191,6 +212,7 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
         cameraDir = Vec4::normalizeVec(cameraDir);
         float dot = Vec4::dotProduct(triangle.norm, cameraDir);
         if(dot <= 0) continue;
+
 
         // Take lighting into account
         Vec4 lightDir = {
@@ -235,6 +257,8 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
         vertexC = viewportTransform * vertexC;
 
         fillTriangle(vertexA, vertexB, vertexC, {255, 255, 255}, lightDot);
+
+        */
 
         auto triangleRenderingTimeEnd = std::chrono::steady_clock::now();
         double triangleRenderingTime = std::chrono::duration<double, std::milli>(triangleRenderingTimeEnd - triangleRenderingTimeStart).count();
