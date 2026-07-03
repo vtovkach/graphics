@@ -33,7 +33,7 @@ Mat4 Transform::viewportTransform(int width, int height)
     return viewport;
 }
 
-Mat4 Transform::translate(float x, float y, float z)
+Mat4 Transform::translateTransform(float x, float y, float z)
 {
     Mat4 translateTransform;
 
@@ -51,7 +51,7 @@ Mat4 Transform::translate(float x, float y, float z)
     return translateTransform;
 }
 
-Mat4 Transform::scale(float sx, float sy, float sz)
+Mat4 Transform::scaleTransform(float sx, float sy, float sz)
 {
     Mat4 scaleTransform;
 
@@ -63,7 +63,7 @@ Mat4 Transform::scale(float sx, float sy, float sz)
     return scaleTransform;
 }
 
-Mat4 Transform::rotationX(float theta)
+Mat4 Transform::rotationXTransform(float theta)
 {
     Mat4 rotationX;
 
@@ -81,7 +81,7 @@ Mat4 Transform::rotationX(float theta)
     return rotationX;
 }
 
-Mat4 Transform::rotationY(float theta)
+Mat4 Transform::rotationYTransform(float theta)
 {
     Mat4 rotationY; 
 
@@ -99,7 +99,7 @@ Mat4 Transform::rotationY(float theta)
     return rotationY;
 }
 
-Mat4 Transform::rotationZ(float theta)
+Mat4 Transform::rotationZTransform(float theta)
 {
     Mat4 rotationZ; 
 
