@@ -55,8 +55,8 @@ Object3D::Object3D(const std::string& objPath)
 Object3D::Object3D(Mesh& mesh)
 {
     object = mesh;
-    position = {0, 0, 0, 0};
-    rotation = {0, 0, 0, 0};
+    position = {0, 0, 0, 1};
+    rotation = {0, 0, 0, 1};
     scale = {1, 1, 1, 1};
 
     this->updateModelTransform();
