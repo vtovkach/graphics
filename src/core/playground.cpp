@@ -1,5 +1,5 @@
 #include "playground.hpp"
-
+#include "render_stats.hpp"
 #include <thread>
 #include <chrono>
 
@@ -39,6 +39,9 @@ void PlayGround::run()
         window.handleEvents();
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     }
+
+    Stats rendererStats = renderer.getStatistics();
+    rendererStats.printStatistics();
 }
 
 void PlayGround::addObject(std::string objectPath, Vec4 initPosition)

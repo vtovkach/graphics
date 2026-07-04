@@ -10,6 +10,7 @@
 #include "math.hpp"
 #include "color.hpp"
 #include "pixel.hpp"
+#include "render_stats.hpp"
 
 class Renderer
 {
@@ -23,6 +24,8 @@ public:
 
     const std::vector<Pixel>& getFrameBuffer() const;
 
+    const Stats& getStatistics() const;
+
 private:
     int width; 
     int height;
@@ -35,6 +38,8 @@ private:
 
     Mat4 projectionTransform;
     Mat4 viewportTransform;
+
+    Stats stats; // Measure the performance of the renderer
 
     void drawPixel(int x, int y, Color color, float brightness);
     void drawLine(Vec4 A, Vec4 B, Color color);

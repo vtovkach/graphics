@@ -1,5 +1,7 @@
 #include "renderer.hpp"
 
+#include <chrono>
+
 constexpr float DEFAULT_FOV = 90.0f; // in degrees
 constexpr float DEFAULT_NEAR = 0.1f;
 constexpr float DEFAULT_FAR = 1000.0f;
@@ -48,6 +50,7 @@ void Renderer::drawPixel(int x, int y, Color color, float brightness)
     }; 
 
     frameBuffer[y * width + x] = pixel;
+    stats.totalPixels++; 
 }
 
 void Renderer::drawLine(Vec4 A, Vec4 B, Color color)
@@ -134,6 +137,8 @@ const std::vector<Pixel>& Renderer::getFrameBuffer() const
 
 void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lighting& light)
 {
+    auto start = std::chrono::steady_clock::now(); // For performance measurement purposes
+
     Mat4 modelTransform = obj.getModelTransform();
     Mesh objMesh = obj.getObjectMesh();
 
@@ -148,6 +153,8 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
 
     for(auto& triangle : objMesh.triangles)
     {
+        auto triangleRenderingTimeStart = std::chrono::steady_clock::now();
+
         Vec4 vertexA = triangle.vertices[0];
         Vec4 vertexB = triangle.vertices[1];
         Vec4 vertexC = triangle.vertices[2];
@@ -212,5 +219,23 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
         vertexC = viewportTransform * vertexC;
 
         fillTriangle(vertexA, vertexB, vertexC, {255, 255, 255}, lightDot);
+
+        auto triangleRenderingTimeEnd = std::chrono::steady_clock::now();
+        double triangleRenderingTime = std::chrono::duration<double, std::milli>(triangleRenderingTimeEnd - triangleRenderingTimeStart).count();
+        stats.totalTriangleRenderTimeMs+= triangleRenderingTime;
+        stats.totalTriangles++; 
     }
+
+    auto end = std::chrono::steady_clock::now();
+    double renderTimeMs = std::chrono::duration<double, std::milli>(end - start).count();
+
+    stats.totalRenderTimeMs+= renderTimeMs;
+    stats.totalRenderFrames++;
+    stats.frameRenderTimeMs = renderTimeMs;
+    this->stats.updateStatistics();
+}
+
+const Stats& Renderer::getStatistics() const
+{
+    return this->stats;
 }
