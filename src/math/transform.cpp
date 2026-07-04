@@ -131,3 +131,29 @@ Mat4 Transform::rotationZTransform(float theta)
 
     return rotationZ;
 }
+
+Mat4 Transform::cameraTransform(Vec4 cameraPosition, Vec4 right, Vec4 up, Vec4 forward)
+{
+    Mat4 translation;
+    translation.setElement(0, 0, 1);
+    translation.setElement(0, 3, -cameraPosition.x);
+    translation.setElement(1, 1, 1);
+    translation.setElement(1, 3, -cameraPosition.y);
+    translation.setElement(2, 2, 1);
+    translation.setElement(2, 3, -cameraPosition.z);
+    translation.setElement(3, 3, 1);
+
+    Mat4 changeBasis;
+    changeBasis.setElement(0, 0, right.x);
+    changeBasis.setElement(0, 1, right.y);
+    changeBasis.setElement(0, 2, right.z);
+    changeBasis.setElement(1, 0, up.x);
+    changeBasis.setElement(1, 1, up.y);
+    changeBasis.setElement(1, 2, up.z);
+    changeBasis.setElement(2, 0, forward.x);
+    changeBasis.setElement(2, 1, forward.y);
+    changeBasis.setElement(2, 2, forward.z);
+    changeBasis.setElement(3, 3, 1);
+    
+    return changeBasis * translation; 
+}

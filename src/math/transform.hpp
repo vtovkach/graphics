@@ -19,4 +19,6 @@ namespace Transform
     Mat4 viewportTransform(int width, int height);
     
     Mat4 projectionTransform(float fov, float aspectRatio, float fNear, float fFar);
+
+    Mat4 cameraTransform(Vec4 cameraPosition, Vec4 right, Vec4 up, Vec4 forward);
 };
