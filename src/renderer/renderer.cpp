@@ -155,9 +155,10 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
 {
     auto start = std::chrono::steady_clock::now(); // For performance measurement purposes
 
+    Mesh objMesh = obj.getObjectMesh();
+
     Mat4 modelTransform = obj.getModelTransform();
     Mat4 cameraTransform = camera.getCameraTransform();
-    Mesh objMesh = obj.getObjectMesh();
 
     projectionTransform = Transform::projectionTransform(
         fov, 
