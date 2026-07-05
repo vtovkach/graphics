@@ -33,53 +33,72 @@ bool Camera::doesTriangleFaceCamera(Triangle tri) const
     return (dot > 0) ? true : false; 
 }
 
-void Camera::moveX()
+void Camera::setRotation(float thetaX, float thetaY, float thetaZ)
 {
-    cameraPosition.x += cameraSpeed;
-    cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
-}
+    // Roll -> Pitch -> Yaw
+    Mat4 rotationTransform = Transform::rotationYTransform(thetaY)   *
+                             Transform::rotationXTransform(thetaX)   *
+                             Transform::rotationZTransform(thetaZ);
 
-void Camera::moveY()
-{
-    cameraPosition.y += cameraSpeed;
-    cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
-}
-
-void Camera::moveZ()
-{
-    cameraPosition.z += cameraSpeed;
-    cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
-}
-
-void Camera::pitch()
-{
-    Mat4 rotation = Transform::rotationXTransform(rotationSpeed);
-
-    right = Vec4::normalizeVec(rotation * right);
-    up = Vec4::normalizeVec(rotation * up);
-    forward = Vec4::normalizeVec(rotation * forward);
+    right = {1, 0 ,0, 0};
+    up = {0, 1, 0, 0};
+    forward = {0, 0, 1, 0};
+    
+    right = rotationTransform * right;
+    up = rotationTransform * up;
+    forward = rotationTransform * forward;
 
     cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
 }
 
-void Camera::yaw()
+void Camera::rotateX(float theta)
 {
-    Mat4 rotation = Transform::rotationYTransform(rotationSpeed);
+    Mat4 rotationTransform = Transform::rotationAroundAxis(right, theta * rotationSpeed);
 
-    right = Vec4::normalizeVec(rotation * right);
-    up = Vec4::normalizeVec(rotation * up);
-    forward = Vec4::normalizeVec(rotation * forward);
+    right = rotationTransform * right;
+    up = rotationTransform * up;
+    forward = rotationTransform * forward;
 
     cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
 }
 
-void Camera::roll()
+void Camera::rotateY(float theta)
 {
-    Mat4 rotation = Transform::rotationZTransform(rotationSpeed);
+    Mat4 rotationTransform = Transform::rotationAroundAxis(up, theta * rotationSpeed);
 
-    right = Vec4::normalizeVec(rotation * right);
-    up = Vec4::normalizeVec(rotation * up);
-    forward = Vec4::normalizeVec(rotation * forward);
+    right = rotationTransform * right;
+    up = rotationTransform * up;
+    forward = rotationTransform * forward;
+
+    cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
+}
+
+void Camera::rotateZ(float theta)
+{
+    Mat4 rotationTransform = Transform::rotationAroundAxis(forward, theta * rotationSpeed);
+
+    right = rotationTransform * right;
+    up = rotationTransform * up;
+    forward = rotationTransform * forward;
+
+    cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
+}
+
+void Camera::setPosition(float x, float y, float z)
+{
+    cameraPosition.x = x;
+    cameraPosition.y = y;
+    cameraPosition.z = z;
+    cameraPosition.w = 1;
+
+    cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
+}
+
+void Camera::move(float dx, float dy, float dz)
+{
+    cameraPosition.x+= dx * cameraSpeed;
+    cameraPosition.y+= dy * cameraSpeed;
+    cameraPosition.z+= dz * cameraSpeed;
 
     cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
 }

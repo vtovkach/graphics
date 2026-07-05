@@ -9,14 +9,13 @@ public:
 
     bool doesTriangleFaceCamera(Triangle tri) const;
 
-    void moveX();
-    void moveY();
-    void moveZ();
-    void setPosition(float x, float y, float z);
+    void setRotation(float thetaX, float thetaY, float thetaZ);
+    void rotateX(float theta);
+    void rotateY(float theta);
+    void rotateZ(float theta);
 
-    void pitch();
-    void yaw();
-    void roll();
+    void setPosition(float x, float y, float z);
+    void move(float dx, float dy, float dz);
 
     Mat4 getCameraTransform() const;
 
