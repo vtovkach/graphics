@@ -1,15 +1,18 @@
 #include "camera.hpp"
 
+constexpr float DEFAULT_CAM_SPEED = 0.15f;
+constexpr float DEFAULT_CAM_ROT_SPEED = 0.15f;
+
 Camera::Camera()
 {
     cameraPosition = {0, 0, 0, 1};
 
-    cameraSpeed = 0.15f;
-    rotationSpeed = 0.15f;
+    cameraSpeed = DEFAULT_CAM_SPEED;
+    rotationSpeed = DEFAULT_CAM_ROT_SPEED;
 
-    forward = {0, 0, 1, 1};
-    up      = {0, 1, 0, 1};
-    right   = {1, 0, 0, 1};
+    forward = {0, 0, 1, 0};
+    up      = {0, 1, 0, 0};
+    right   = {1, 0, 0, 0};
 
     cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
 }
