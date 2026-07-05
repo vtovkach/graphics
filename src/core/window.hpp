@@ -5,13 +5,15 @@
 #include <cstdint>
 #include <vector>
 
+#include <camera.hpp>
+
 class Window
 {
 public:
     explicit Window(const char* title, int width, int height);
     ~Window();
 
-    void handleEvents();
+    void handleEvents(Camera& camera);
     void drawScreen(const uint32_t *framebuffer);
 
     bool isActive() const;

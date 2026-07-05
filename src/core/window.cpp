@@ -47,13 +47,42 @@ Window::~Window()
     SDL_Quit();
 }
 
-void Window::handleEvents() 
+void Window::handleEvents(Camera& camera) 
 {
     SDL_Event event;
 
-    while (SDL_PollEvent(&event)) {
+    while (SDL_PollEvent(&event)) 
+    {
         if (event.type == SDL_EVENT_QUIT) {
             active = false;
+        }
+
+        if(event.type == SDL_EVENT_KEY_DOWN)
+        {
+            if(event.key.key == SDLK_W){
+            camera.move(0, 0, 1);
+            }
+            else if(event.key.key == SDLK_S){
+                camera.move(0, 0, -1);
+            }
+            else if(event.key.key == SDLK_A){
+                camera.move(-1, 0, 0);
+            }
+            else if(event.key.key == SDLK_D){
+                camera.move(1, 0, 0);
+            }
+            else if(event.key.key == SDLK_Q){
+                camera.rotateY(-1);
+            }
+            else if(event.key.key == SDLK_E){
+                camera.rotateY(1);
+            }
+            else if(event.key.key == SDLK_R){
+                camera.rotateX(-1);
+            }
+            else if(event.key.key == SDLK_F){
+                camera.rotateX(1);
+            }
         }
     }
 }

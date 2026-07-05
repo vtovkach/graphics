@@ -20,7 +20,7 @@ void PlayGround::run()
 {
     while(window.isActive())
     {   
-        Camera camera = activeScene.getCamera();
+        Camera& camera = activeScene.getCamera();
         Lighting light = activeScene.getLighting();        
         std::vector<Object3D>& objects = activeScene.getObjects();
 
@@ -36,7 +36,7 @@ void PlayGround::run()
         const uint32_t *pixels = reinterpret_cast<const uint32_t *>(framebuf.data());
         window.drawScreen(pixels);
 
-        window.handleEvents();
+        window.handleEvents(camera);
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     }
 
