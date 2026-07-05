@@ -157,3 +157,34 @@ Mat4 Transform::cameraTransform(Vec4 cameraPosition, Vec4 right, Vec4 up, Vec4 f
     
     return changeBasis * translation; 
 }
+
+Mat4 Transform::rotationAroundAxis(Vec4 axis, float theta)
+{
+    axis = Vec4::normalizeVec(axis);
+
+    float x = axis.x;
+    float y = axis.y;
+    float z = axis.z;
+
+    float c = cos(theta);
+    float s = sin(theta);
+    float t = 1.0f - c;
+
+    Mat4 r;
+
+    r.setElement(0, 0, t*x*x + c);
+    r.setElement(0, 1, t*x*y - s*z);
+    r.setElement(0, 2, t*x*z + s*y);
+
+    r.setElement(1, 0, t*x*y + s*z);
+    r.setElement(1, 1, t*y*y + c);
+    r.setElement(1, 2, t*y*z - s*x);
+
+    r.setElement(2, 0, t*x*z - s*y);
+    r.setElement(2, 1, t*y*z + s*x);
+    r.setElement(2, 2, t*z*z + c);
+
+    r.setElement(3, 3, 1.0f);
+
+    return r;
+}

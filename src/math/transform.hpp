@@ -10,6 +10,8 @@ namespace Transform
 
     Mat4 scaleTransform(float sx, float sy, float sz);
 
+    Mat4 rotationAroundAxis(Vec4 axis, float theta);
+
     Mat4 rotationXTransform(float theta);
 
     Mat4 rotationYTransform(float theta);
