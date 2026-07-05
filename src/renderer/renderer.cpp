@@ -156,6 +156,7 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
     auto start = std::chrono::steady_clock::now(); // For performance measurement purposes
 
     Mat4 modelTransform = obj.getModelTransform();
+    Mat4 cameraTransform = camera.getCameraTransform();
     Mesh objMesh = obj.getObjectMesh();
 
     projectionTransform = Transform::projectionTransform(
@@ -179,6 +180,8 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
 
         // Compute lighting 
         float brightness = light.computerBrightness(triangle);
+
+        triangle.transform(cameraTransform);
 
         // Projection transform
         triangle.transform(projectionTransform);
