@@ -2,11 +2,11 @@
 #include <iostream>
 #include <cmath>
 
-#include "playground.hpp"
+#include "example.hpp"
 
 int main() 
 {   
-    PlayGround app;
+    Example app("Renderer", 600, 1000);
     app.addObject("res/teapot.obj", Vec4(0, 0, 8, 0));
     app.run();
 }
