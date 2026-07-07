@@ -1,23 +1,26 @@
 #pragma once
 
-#include "window.hpp"
-#include "renderer.hpp"
-#include "scene.hpp"
-
 #include <string>
+#include <memory> 
+#include "math.hpp"
 
 class PlayGround
 {
 public:
+    PlayGround(const char *title, int width, int height);
     PlayGround();
-    explicit PlayGround(const char *title, int width, int height);
+    ~PlayGround();
+
+    PlayGround(const PlayGround&) = delete;
+    PlayGround& operator=(const PlayGround&) = delete; 
+
+    PlayGround(PlayGround&&) = delete;
+    PlayGround& operator=(PlayGround&&) = delete;
 
     void addObject(std::string objectPath, Vec4 initPosition);
-
     void run();
 
 private:
-    Window window; 
-    Renderer renderer;     
-    Scene activeScene;  
+    class Impl;
+    std::unique_ptr<Impl> impl;
 };
