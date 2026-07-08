@@ -10,7 +10,8 @@ else
 endif
 
 BUILD_DIR := ../build/app
-TARGET := ../bin/example
+TARGET_DIR := ../bin/
+TARGET := $(TARGET_DIR)example
 
 SDL_CFLAGS := $(shell pkg-config --cflags sdl3)
 SDL_LIBS := $(shell pkg-config --libs sdl3)
@@ -32,6 +33,6 @@ $(BUILD_DIR)/%.o: %.cpp
 
 clean:
 	rm -rf $(BUILD_DIR)
-	rm -f $(TARGET)
+	rm -rf $(TARGET_DIR)
 
 .PHONY: all clean
