@@ -5,6 +5,7 @@
 #include <cmath>
 
 #include "object3D.hpp"
+#include "scene.hpp"
 #include "camera.hpp"
 #include "lighting.hpp"
 #include "v-math.hpp"
@@ -17,7 +18,7 @@ class Renderer
 public:
     explicit Renderer(int width, int height);
 
-    void renderObject(const Object3D& obj, const Camera& camera, const Lighting& light);
+    void renderObject(const Object3D& obj, const Scene* scene);
 
     void clearFrameBuffer();
     void clearDepthBuffer();

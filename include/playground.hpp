@@ -2,7 +2,8 @@
 
 #include <string>
 #include <memory> 
-#include "v-math.hpp"
+
+#include "scene.hpp"
 
 class PlayGround
 {
@@ -18,8 +19,6 @@ public:
     PlayGround& operator=(PlayGround&&) = delete;
 
     void run();
-    
-    void addObject(std::string objectPath, Vec4 initPosition);
 
 protected:
     virtual void _ready() = 0;
@@ -27,6 +26,13 @@ protected:
 
     virtual void _keyPressed() = 0;
     virtual void _keyReleased() = 0;
+
+    void addScene(std::unique_ptr<Scene> scene);
+    void deleteScene(const std::string& sceneId);
+    void setActiveScene(const std::string* sceneId);
+
+    std::unique_ptr<Scene> getScene(const std::string& sceneId);
+    std::unique_ptr<Scene> getActiveScene();
 
 private:
     class Impl;

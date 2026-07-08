@@ -12,6 +12,7 @@ public:
 private:
     void _ready() override
     {
+        
     }
     void _process() override
     {

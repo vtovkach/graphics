@@ -14,6 +14,7 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include <unordered_map>
 
 constexpr const char* DEFAULT_TITLE = "Renderer";
 constexpr int DEFAULT_WIDTH = 800;
@@ -31,7 +32,9 @@ public:
 
     Window window;
     Renderer renderer;
-    Scene activeScene;
+
+    std::unordered_map<std::string, std::unique_ptr<Scene>> scenes; 
+    std::unique_ptr<Scene> activeScene;
 };
 
 PlayGround::PlayGround()
@@ -48,38 +51,30 @@ PlayGround::~PlayGround() = default;
 
 void PlayGround::run()
 {
+    _ready(); // User implemented function
+
     while (impl->window.isActive())
     {   
-        Camera& camera = impl->activeScene.getCamera();
-        Lighting light = impl->activeScene.getLighting();        
-        std::vector<Object3D>& objects = impl->activeScene.getObjects();
-
+        _process(); // User implemented function
+        
         impl->renderer.clearFrameBuffer();
         impl->renderer.clearDepthBuffer();
 
-        for (auto& obj : objects)
+        for (auto it = impl->activeScene->objectsStart(); it != impl->activeScene->objectsEnd(); it++)
         {
-            obj.rotateObject(0.0f, 1.0f, 0.5f);
-            impl->renderer.renderObject(obj, camera, light);
+            Object3D *obj = it->second.get();
+            impl->renderer.renderObject(*obj, impl->activeScene.get());
         }
 
         std::vector<Pixel> framebuf = impl->renderer.getFrameBuffer(); 
         const uint32_t* pixels = reinterpret_cast<const uint32_t*>(framebuf.data());
 
         impl->window.drawScreen(pixels);
-        impl->window.handleEvents(camera);
+        impl->window.handleEvents();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     }
 
     Stats rendererStats = impl->renderer.getStatistics();
     rendererStats.printStatistics();
-}
-
-void PlayGround::addObject(std::string objectPath, Vec4 initPosition)
-{
-    Object3D obj(objectPath);
-    obj.setObjPos(initPosition.x, initPosition.y, initPosition.z);
-
-    impl->activeScene.addObject(obj);
 }

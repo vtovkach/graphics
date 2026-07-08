@@ -12,8 +12,8 @@ struct Mesh
 class Object3D
 {
 public:
-    explicit Object3D(const std::string& objPath);
-    explicit Object3D(Mesh& mesh);
+    explicit Object3D(const std::string& objPath, const std::string& objectId);
+    explicit Object3D(Mesh& mesh, const std::string& objectId);
 
     void incObjPos(float dx, float dy, float dz);
     void setObjPos(float x, float y, float z);
@@ -23,7 +23,11 @@ public:
     Mesh getObjectMesh() const;
     Mat4 getModelTransform() const;
 
+    const std::string& getId() const;
+
 private:
+    std::string objectId;
+
     Mesh object; 
     Vec4 position; 
     Vec4 rotation; 

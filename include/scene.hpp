@@ -1,21 +1,35 @@
 #pragma once
 
-#include <vector>
-#include "camera.hpp"
-#include "lighting.hpp"
+#include <memory>
+#include <unordered_map>
+
 #include "object3D.hpp"
+
+using ObjectIterator = std::unordered_map<std::string, std::unique_ptr<Object3D>>::const_iterator;
 
 class Scene
 {
 public:
-    std::vector<Object3D>& getObjects();
-    Lighting& getLighting();
-    Camera& getCamera();
+    Scene(std::string id);
+    ~Scene();
 
-    void addObject(Object3D obj);
+    void addObject(std::unique_ptr<Object3D> obj);
+    void removeObject(const std::string& objectId);
 
+    Object3D* getObject(const std::string& objectId);
+
+    ObjectIterator objectsStart() const;
+    ObjectIterator objectsEnd() const;
+
+    Mat4 getModelTransform(const std::string& objectId) const;
+    Mat4 getCameraTransform() const;
+
+    Vec4 getCameraPosition() const;
+    Vec4 getLightSourcePosition() const;
+    
 private:
-    std::vector<Object3D> objects; 
-    Lighting light; 
-    Camera camera;    
+    class Impl;
+    std::unique_ptr<Impl> impl;
+
+    friend class Playground;
 };

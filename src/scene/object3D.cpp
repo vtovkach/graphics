@@ -4,9 +4,10 @@
 #include <fstream>
 #include <sstream>
 
-Object3D::Object3D(const std::string& objPath)
+Object3D::Object3D(const std::string& objPath, const std::string& objectId)
 {
-    // Define scale vector with 1s 
+    this->objectId = std::move(objectId);
+
     std::ifstream file(objPath);
 
     if(!file.is_open())
@@ -52,8 +53,10 @@ Object3D::Object3D(const std::string& objPath)
     this->updateModelTransform();
 }
 
-Object3D::Object3D(Mesh& mesh)
+Object3D::Object3D(Mesh& mesh, const std::string& objectId)
 {
+    this->objectId = std::move(objectId);
+    
     object = mesh;
     position = {0, 0, 0, 1};
     rotation = {0, 0, 0, 1};
@@ -119,4 +122,9 @@ Mesh Object3D::getObjectMesh() const
 Mat4 Object3D::getModelTransform() const
 {
     return modelTransform;
+}
+
+const std::string& Object3D::getId() const
+{
+    return objectId;
 }

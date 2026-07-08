@@ -13,3 +13,8 @@ float Lighting::computerBrightness(Triangle tri) const
 
     return Vec4::dotProduct(lightDir, tri.norm);
 }
+
+Vec4 Lighting::getPosition() const
+{
+    return lightSourcePos;
+}

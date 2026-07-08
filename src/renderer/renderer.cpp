@@ -30,6 +30,37 @@ namespace
             tri.vertices[i].w = 1.0f;
         }
     }
+
+    bool doesTriangleFaceCamera(Triangle& tri, Vec4 cameraPosition)
+    {
+        Vec4 triangleNorm = tri.norm;
+        Vec4 cameraDir = {
+            cameraPosition.x - tri.vertices[0].x, 
+            cameraPosition.y - tri.vertices[0].y, 
+            cameraPosition.z - tri.vertices[0].z, 
+            0.0f
+        };
+
+        cameraDir = Vec4::normalizeVec(cameraDir);
+
+        float dot = Vec4::dotProduct(triangleNorm, cameraDir);
+        
+        return (dot > 0) ? true : false; 
+    }
+
+    bool computeBrightness(Triangle& tri, Vec4 lightSource)
+    {
+        Vec4 lightDir = {
+            lightSource.x - tri.vertices[0].x,
+            lightSource.y - tri.vertices[0].y,
+            lightSource.z - tri.vertices[0].z,
+            0.0f
+        };
+
+        lightDir = Vec4::normalizeVec(lightDir);
+
+        return Vec4::dotProduct(lightDir, tri.norm);
+    }
 }
 
 Renderer::Renderer(int width, int height) 
@@ -151,14 +182,14 @@ const std::vector<Pixel>& Renderer::getFrameBuffer() const
     return frameBuffer;
 }
 
-void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lighting& light)
+void Renderer::renderObject(const Object3D& obj, const Scene* scene)
 {
     auto start = std::chrono::steady_clock::now(); // For performance measurement purposes
 
     Mesh objMesh = obj.getObjectMesh();
 
-    Mat4 modelTransform = obj.getModelTransform();
-    Mat4 cameraTransform = camera.getCameraTransform();
+    Mat4 modelTransform = scene->getModelTransform(obj.getId()); 
+    Mat4 cameraTransform = scene->getCameraTransform();
 
     projectionTransform = Transform::projectionTransform(
         fov, 
@@ -176,11 +207,11 @@ void Renderer::renderObject(const Object3D& obj, const Camera& camera, const Lig
         triangle.transform(modelTransform);
 
         // Back-face culling 
-        if(!camera.doesTriangleFaceCamera(triangle)) 
+        if(!doesTriangleFaceCamera(triangle, scene->getCameraPosition())) 
             continue;
 
         // Compute lighting 
-        float brightness = light.computerBrightness(triangle);
+        float brightness = computeBrightness(triangle, scene->getLightSourcePosition());
 
         triangle.transform(cameraTransform);
 
@@ -214,3 +245,6 @@ const Stats& Renderer::getStatistics() const
 {
     return this->stats;
 }
+
+// Move back-face culling from the camera 
+// Move away compute brightness from the lighting class  

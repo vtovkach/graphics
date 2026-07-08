@@ -7,8 +7,6 @@ class Camera
 public:
     Camera();
 
-    bool doesTriangleFaceCamera(Triangle tri) const;
-
     void setRotation(float thetaX, float thetaY, float thetaZ);
     void rotateX(float theta);
     void rotateY(float theta);
@@ -16,6 +14,8 @@ public:
 
     void setPosition(float x, float y, float z);
     void move(float dx, float dy, float dz);
+
+    Vec4 getPosition() const;
 
     Mat4 getCameraTransform() const;
 
