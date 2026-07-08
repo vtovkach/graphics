@@ -7,7 +7,7 @@
 #include "object3D.hpp"
 #include "camera.hpp"
 #include "lighting.hpp"
-#include "math.hpp"
+#include "v-math.hpp"
 #include "color.hpp"
 #include "pixel.hpp"
 #include "render_stats.hpp"

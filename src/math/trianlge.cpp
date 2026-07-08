@@ -1,5 +1,5 @@
 #include <stdexcept>
-#include "math.hpp"
+#include "v-math.hpp"
 
 Triangle::Triangle(Vec4 A, Vec4 B, Vec4 C)
 {

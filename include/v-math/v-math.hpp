@@ -1,7 +1,6 @@
 #pragma once 
 
 #include <cmath>
-#include <vector>
 
 #include "vec4.hpp"
 #include "mat4.hpp"
