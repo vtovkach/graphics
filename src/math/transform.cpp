@@ -1,4 +1,5 @@
 #include "v-math.hpp"
+#include <cmath>
 
 Mat4 Transform::formMatrix(const Vec4& a, const Vec4& b, const Vec4& c)
 {
