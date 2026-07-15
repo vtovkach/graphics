@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "playground.hpp"
+#include <memory>
 
 class Example : public PlayGround
 {
@@ -12,7 +13,9 @@ public:
 private:
     void _ready() override
     {
-        
+        std::unique_ptr<Scene> scene = std::make_unique<Scene>("main");
+        addScene(std::move(scene));
+        setActiveScene(std::string("main"));
     }
     void _process() override
     {
