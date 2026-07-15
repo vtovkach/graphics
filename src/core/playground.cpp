@@ -34,7 +34,7 @@ public:
     Renderer renderer;
 
     std::unordered_map<std::string, std::unique_ptr<Scene>> scenes; 
-    std::unique_ptr<Scene> activeScene;
+    Scene* activeScene;
 };
 
 PlayGround::PlayGround()
@@ -63,7 +63,7 @@ void PlayGround::run()
         for (auto it = impl->activeScene->objectsStart(); it != impl->activeScene->objectsEnd(); it++)
         {
             Object3D *obj = it->second.get();
-            impl->renderer.renderObject(*obj, impl->activeScene.get());
+            impl->renderer.renderObject(*obj, impl->activeScene);
         }
 
         std::vector<Pixel> framebuf = impl->renderer.getFrameBuffer(); 
@@ -77,4 +77,72 @@ void PlayGround::run()
 
     Stats rendererStats = impl->renderer.getStatistics();
     rendererStats.printStatistics();
+}
+
+void PlayGround::addScene(std::unique_ptr<Scene> scene)
+{
+    if (!scene)
+    {
+        throw std::invalid_argument("Scene cannot be null");
+    }
+
+    std::string sceneId = scene->getId();
+
+    auto [it, inserted] =
+        impl->scenes.emplace(sceneId, std::move(scene));
+
+    if (!inserted)
+    {
+        throw std::runtime_error(
+            "Scene already exists: " + sceneId
+        );
+    }
+}
+
+void PlayGround::deleteScene(const std::string& sceneId)
+{
+    auto it = impl->scenes.find(sceneId);
+
+    if (it == impl->scenes.end())
+    {
+        throw std::runtime_error(
+            "Scene does not exist: " + sceneId
+        );
+    }
+
+    if (it->second.get() == impl->activeScene)
+    {
+        throw std::runtime_error(
+            "Cannot remove active scene: " + sceneId
+        );
+    }
+
+    impl->scenes.erase(it);
+}
+
+void PlayGround::setActiveScene(const std::string& sceneId)
+{
+    auto it = impl->scenes.find(sceneId);
+    if(it == impl->scenes.end())
+    {
+        throw std::runtime_error("Scene does not exist: " + sceneId);
+    }
+
+    impl->activeScene = it->second.get();
+}
+
+Scene* PlayGround::getScene(const std::string& sceneId) const
+{
+    auto it = impl->scenes.find(sceneId);
+    if(it == impl->scenes.end())
+    {
+        throw std::runtime_error("Scene does not exist: " + sceneId);
+    }
+
+    return it->second.get();
+}
+
+Scene* PlayGround::getActiveScene() const
+{
+    return impl->activeScene;
 }

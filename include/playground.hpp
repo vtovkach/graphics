@@ -29,10 +29,10 @@ protected:
 
     void addScene(std::unique_ptr<Scene> scene);
     void deleteScene(const std::string& sceneId);
-    void setActiveScene(const std::string* sceneId);
+    void setActiveScene(const std::string& sceneId);
 
-    std::unique_ptr<Scene> getScene(const std::string& sceneId);
-    std::unique_ptr<Scene> getActiveScene();
+    Scene* getScene(const std::string& sceneId) const;
+    Scene* getActiveScene() const;
 
 private:
     class Impl;
