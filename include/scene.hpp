@@ -13,6 +13,8 @@ public:
     Scene(std::string id);
     ~Scene();
 
+    const std::string& getId() const;
+
     void addObject(std::unique_ptr<Object3D> obj);
     void removeObject(const std::string& objectId);
 

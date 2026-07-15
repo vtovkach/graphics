@@ -16,6 +16,11 @@ ObjectIterator Scene::objectsEnd() const
     return impl->objects.cend();
 }
 
+const std::string& Scene::getId() const
+{
+    return impl->sceneId;
+}
+
 void Scene::addObject(std::unique_ptr<Object3D> obj)
 {
     std::string id = obj->getId();
