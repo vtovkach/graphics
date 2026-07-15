@@ -245,6 +245,3 @@ const Stats& Renderer::getStatistics() const
 {
     return this->stats;
 }
-
-// Move back-face culling from the camera 
-// Move away compute brightness from the lighting class  
