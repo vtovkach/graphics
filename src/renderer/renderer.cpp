@@ -48,7 +48,7 @@ namespace
         return (dot > 0) ? true : false; 
     }
 
-    bool computeBrightness(Triangle& tri, Vec4 lightSource)
+    float computeBrightness(Triangle& tri, Vec4 lightSource)
     {
         Vec4 lightDir = {
             lightSource.x - tri.vertices[0].x,
