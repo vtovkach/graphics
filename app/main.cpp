@@ -6,6 +6,6 @@
 
 int main() 
 {   
-    Example app("Renderer", 600, 1000);
+    Example app("Renderer", 1000, 1000);
     app.run();
 }
