@@ -223,7 +223,7 @@ void Renderer::renderObject(const Object3D& obj, const Scene* scene)
         // Viewport transform
         triangle.transform(viewportTransform);
 
-        fillTriangle(triangle[0], triangle[1], triangle[2], {255, 255, 255}, brightness);
+        fillTriangle(triangle[0], triangle[1], triangle[2], {255, 255, 255}, std::abs(brightness));
 
         auto triangleRenderingTimeEnd = std::chrono::steady_clock::now();
         double triangleRenderingTime = std::chrono::duration<double, std::milli>(triangleRenderingTimeEnd - triangleRenderingTimeStart).count();
