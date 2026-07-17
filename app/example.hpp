@@ -17,7 +17,7 @@ private:
         addScene(std::move(scene));
         setActiveScene(std::string("main"));
 
-        std::unique_ptr<Object3D> obj = std::make_unique<Object3D>("res/cube.obj", "cube");
+        std::unique_ptr<Object3D> obj = std::make_unique<Object3D>("res/VideoShip.obj", "ship");
 
         Scene *activeScene = getActiveScene();
         activeScene->addObject(std::move(obj));
@@ -26,7 +26,7 @@ private:
     void _process() override
     {
         Scene *activeScene = getActiveScene();
-        Object3D *obj = activeScene->getObject("cube");
+        Object3D *obj = activeScene->getObject("ship");
         obj->rotateObject(0.55, 0, 0.30);
     }
 
