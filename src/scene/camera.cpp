@@ -5,7 +5,7 @@ constexpr float DEFAULT_CAM_ROT_SPEED = 0.15f;
 
 Camera::Camera()
 {
-    cameraPosition = {0, 0, 0, 1};
+    cameraPosition = {0, 0, 10, 1};
 
     cameraSpeed = DEFAULT_CAM_SPEED;
     rotationSpeed = DEFAULT_CAM_ROT_SPEED;
