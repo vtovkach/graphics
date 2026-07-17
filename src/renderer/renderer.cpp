@@ -151,7 +151,7 @@ void Renderer::fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightnes
     maxY = std::min(maxY, height - 1);
 
     float ABCarea = triArea(A, B, C); 
-    if(ABCarea < 1e-6f) return; // Degenerate triangle
+    if(std::abs(ABCarea) < 1e-6f) return; // Degenerate triangle
 
     for(int x = minX; x < maxX; x++)
     {
