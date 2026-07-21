@@ -23,9 +23,8 @@ private:
         activeScene->addObject(std::move(obj));
     }
 
-    void _process() override
+    void _process(Scene *activeScene) override
     {
-        Scene *activeScene = getActiveScene();
         Object3D *obj = activeScene->getObject("ship");
         obj->rotateObject(0.55, 0, 0.30);
     }

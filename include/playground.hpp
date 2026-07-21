@@ -22,7 +22,7 @@ public:
 
 protected:
     virtual void _ready() = 0;
-    virtual void _process() = 0;
+    virtual void _process(Scene *activeScene) = 0;
 
     virtual void _keyPressed() = 0;
     virtual void _keyReleased() = 0;

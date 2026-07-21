@@ -55,7 +55,7 @@ void PlayGround::run()
 
     while (impl->window.isActive())
     {   
-        _process(); // User implemented function
+        _process(this->getActiveScene()); // User implemented function
         
         impl->renderer.clearFrameBuffer();
         impl->renderer.clearDepthBuffer();
