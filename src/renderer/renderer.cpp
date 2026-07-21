@@ -168,7 +168,7 @@ void Renderer::fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightnes
 
             // Depth Test
             float z = alpha * A.z + beta * B.z + gamma * C.z;
-            if(depthBuffer[y * width + x] < z) 
+            if(z > depthBuffer[y * width + x]) 
                 continue;
             depthBuffer[y * width + x] = z;
 
