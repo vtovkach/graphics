@@ -10,7 +10,7 @@ Camera::Camera()
     cameraSpeed = DEFAULT_CAM_SPEED;
     rotationSpeed = DEFAULT_CAM_ROT_SPEED;
 
-    forward = {0, 0, 1, 0};
+    forward = {0, 0, -1, 0}; /* direction into the screen is negative z */
     up      = {0, 1, 0, 0};
     right   = {1, 0, 0, 0};
 
