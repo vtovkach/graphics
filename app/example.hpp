@@ -29,11 +29,11 @@ private:
         obj->rotateObject(0.55, 0, 0.30);
     }
 
-    void _keyPressed() override
+    void _keyPressed(Keycode key) override
     {
     }
 
-    void _keyReleased() override
+    void _keyReleased(Keycode key) override
     {
     }
 };

@@ -4,6 +4,7 @@
 #include <memory> 
 
 #include "scene.hpp"
+#include "keys.hpp"
 
 class PlayGround
 {
@@ -24,8 +25,8 @@ protected:
     virtual void _ready() = 0;
     virtual void _process(Scene *activeScene) = 0;
 
-    virtual void _keyPressed() = 0;
-    virtual void _keyReleased() = 0;
+    virtual void _keyPressed(Keycode key) = 0;
+    virtual void _keyReleased(Keycode key) = 0;
 
     void addScene(std::unique_ptr<Scene> scene);
     void deleteScene(const std::string& sceneId);
