@@ -70,7 +70,8 @@ void PlayGround::run()
         const uint32_t* pixels = reinterpret_cast<const uint32_t*>(framebuf.data());
 
         impl->window.drawScreen(pixels);
-        impl->window.handleEvents();
+
+        SDL_Event event = impl->window.catchEvent();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     }

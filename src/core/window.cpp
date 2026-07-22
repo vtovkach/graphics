@@ -47,16 +47,16 @@ Window::~Window()
     SDL_Quit();
 }
 
-void Window::handleEvents() 
+/**
+ * Returns the next available SDL event.
+ * If no event is available, returns a zero-initialized SDL_Event.
+ */
+SDL_Event Window::catchEvent() 
 {
-    SDL_Event event;
+    SDL_Event event{};
 
-    while (SDL_PollEvent(&event)) 
-    {
-        if (event.type == SDL_EVENT_QUIT) {
-            active = false;
-        }
-    }
+    SDL_PollEvent(&event);
+    return event;
 }
 
 bool Window::isActive() const

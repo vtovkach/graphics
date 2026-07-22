@@ -13,7 +13,7 @@ public:
     explicit Window(const char* title, int width, int height);
     ~Window();
 
-    void handleEvents();
+    SDL_Event catchEvent();
     void drawScreen(const uint32_t *framebuffer);
 
     bool isActive() const;
