@@ -31,11 +31,38 @@ private:
 
     void _keyPressed(Keycode key, Scene *activeScene) override
     {
-        std::cout << "Key Pressed" << std::endl;
+        switch(key)
+        {
+            case PG_W:
+                activeScene->moveCamera(0, 0, -1);
+                break; 
+            case PG_S:
+                activeScene->moveCamera(0, 0, 1);
+                break; 
+            case PG_A:
+                activeScene->moveCamera(-1, 0, 0);
+                break;
+            case PG_D:
+                activeScene->moveCamera(1, 0, 0);
+                break;
+            case PG_UP:
+                activeScene->rotateCameraX(0.15);
+                break; 
+            case PG_DOWN:
+                activeScene->rotateCameraX(-0.15);
+                break; 
+            case PG_LEFT:
+                activeScene->rotateCameraY(0.15);
+                break; 
+            case PG_RIGHT:
+                activeScene->rotateCameraY(-0.15);
+                break;
+        }
     }
 
     void _keyReleased(Keycode key, Scene *activeScene) override
     {
-        std::cout << "Key released" << std::endl;
+        (void) key;
+        (void) activeScene;
     }
 };
