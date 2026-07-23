@@ -1,3 +1,5 @@
+MAKEFLAGS += -j$(shell nproc)
+
 all:
 	$(MAKE) -C src
 
