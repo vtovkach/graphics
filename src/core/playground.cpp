@@ -35,6 +35,10 @@ public:
 
     std::unordered_map<std::string, std::unique_ptr<Scene>> scenes; 
     Scene* activeScene;
+
+    std::vector<SDL_Event> events; 
+
+    void handleEvents(PlayGround *pgPtr); 
 };
 
 PlayGround::PlayGround()
@@ -48,6 +52,31 @@ PlayGround::PlayGround(const char* title, int width, int height)
 }
 
 PlayGround::~PlayGround() = default;
+
+void PlayGround::Impl::handleEvents(PlayGround *pgPtr)
+{
+    SDL_Event event;
+
+    while(!this->events.empty())
+    {
+        event = this->events.back();
+
+        if(event.type == SDL_EVENT_QUIT) {
+            this->window.closeWindow();
+        }
+        else if(event.type == SDL_EVENT_KEY_DOWN) {
+            pgPtr->_keyPressed(static_cast<Keycode>(event.key.key));
+        }
+        else if(event.type == SDL_EVENT_KEY_UP) {
+            pgPtr->_keyReleased(static_cast<Keycode>(event.key.key));
+        }
+        else {
+            // Unknown event
+        }
+        
+        this->events.pop_back();
+    }
+}
 
 void PlayGround::run()
 {
@@ -70,8 +99,8 @@ void PlayGround::run()
         const uint32_t* pixels = reinterpret_cast<const uint32_t*>(framebuf.data());
 
         impl->window.drawScreen(pixels);
-
-        SDL_Event event = impl->window.catchEvent();
+        impl->window.catchEvents(impl->events);
+        impl->handleEvents(this);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME));
     }

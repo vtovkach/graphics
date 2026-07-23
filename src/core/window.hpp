@@ -13,9 +13,10 @@ public:
     explicit Window(const char* title, int width, int height);
     ~Window();
 
-    SDL_Event catchEvent();
+    void catchEvents(std::vector<SDL_Event>& events);
     void drawScreen(const uint32_t *framebuffer);
-
+    void closeWindow();
+    
     bool isActive() const;
 
 private:

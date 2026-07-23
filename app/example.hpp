@@ -31,9 +31,11 @@ private:
 
     void _keyPressed(Keycode key) override
     {
+        std::cout << "Key Pressed" << std::endl;
     }
 
     void _keyReleased(Keycode key) override
     {
+        std::cout << "Key released" << std::endl;
     }
 };
