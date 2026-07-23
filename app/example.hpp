@@ -29,12 +29,12 @@ private:
         obj->rotateObject(0.55, 0, 0.30);
     }
 
-    void _keyPressed(Keycode key) override
+    void _keyPressed(Keycode key, Scene *activeScene) override
     {
         std::cout << "Key Pressed" << std::endl;
     }
 
-    void _keyReleased(Keycode key) override
+    void _keyReleased(Keycode key, Scene *activeScene) override
     {
         std::cout << "Key released" << std::endl;
     }

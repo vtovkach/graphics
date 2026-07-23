@@ -65,10 +65,10 @@ void PlayGround::Impl::handleEvents(PlayGround *pgPtr)
             this->window.closeWindow();
         }
         else if(event.type == SDL_EVENT_KEY_DOWN) {
-            pgPtr->_keyPressed(static_cast<Keycode>(event.key.key));
+            pgPtr->_keyPressed(static_cast<Keycode>(event.key.key), this->activeScene);
         }
         else if(event.type == SDL_EVENT_KEY_UP) {
-            pgPtr->_keyReleased(static_cast<Keycode>(event.key.key));
+            pgPtr->_keyReleased(static_cast<Keycode>(event.key.key), this->activeScene);
         }
         else {
             // Unknown event

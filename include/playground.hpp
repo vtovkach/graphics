@@ -25,8 +25,8 @@ protected:
     virtual void _ready() = 0;
     virtual void _process(Scene *activeScene) = 0;
 
-    virtual void _keyPressed(Keycode key) = 0;
-    virtual void _keyReleased(Keycode key) = 0;
+    virtual void _keyPressed(Keycode key, Scene *activeScene) = 0;
+    virtual void _keyReleased(Keycode key, Scene *activeScene) = 0;
 
     void addScene(std::unique_ptr<Scene> scene);
     void deleteScene(const std::string& sceneId);
