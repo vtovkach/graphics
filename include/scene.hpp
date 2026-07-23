@@ -28,6 +28,14 @@ public:
 
     Vec4 getCameraPosition() const;
     Vec4 getLightSourcePosition() const;
+
+    void setCameraPosition(float x, float y, float z);
+    void moveCamera(float dx, float dy, float dz);
+
+    void setCameraRotation(float thetaX, float thetaY, float thetaZ);
+    void rotateCameraX(float theta);
+    void rotateCameraY(float theta);
+    void rotateCameraZ(float theta);
     
 private:
     class Impl;

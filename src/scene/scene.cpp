@@ -85,3 +85,33 @@ Vec4 Scene::getLightSourcePosition() const
 {
     return impl->light.getPosition();
 }
+
+void Scene::setCameraPosition(float x, float y, float z)
+{
+    impl->camera.setPosition(x, y, z);
+}
+
+void Scene::moveCamera(float dx, float dy, float dz)
+{
+    impl->camera.move(dx, dy, dz);
+}
+
+void Scene::setCameraRotation(float thetaX, float thetaY, float thetaZ)
+{
+    impl->camera.setRotation(thetaX, thetaY, thetaZ);
+}
+
+void Scene::rotateCameraX(float theta)
+{
+    impl->camera.rotateX(theta);
+}
+
+void Scene::rotateCameraY(float theta)
+{
+    impl->camera.rotateY(theta);
+}
+
+void Scene::rotateCameraZ(float theta)
+{
+    impl->camera.rotateZ(theta);
+}
