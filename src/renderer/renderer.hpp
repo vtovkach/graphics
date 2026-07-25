@@ -45,4 +45,6 @@ private:
     void drawPixel(int x, int y, Color color, float brightness);
     void drawLine(Vec4 A, Vec4 B, Color color);
     void fillTriangle(Vec4 A, Vec4 B, Vec4 C, Color color, float brightness);  
+
+    std::vector<Triangle> clipTriangle(Triangle tri);
 };

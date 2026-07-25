@@ -217,6 +217,11 @@ void Renderer::renderObject(const Object3D& obj, const Scene* scene)
 
         // Projection transform
         triangle.transform(projectionTransform);
+        
+        // Clipping should happen here 
+        std::vector<Triangle> clipTriangle = this->clipTriangle(triangle);
+        // TODO ... 
+
         perspectiveDivide(triangle);
         triangle.updateState();
 
@@ -239,6 +244,15 @@ void Renderer::renderObject(const Object3D& obj, const Scene* scene)
     stats.totalRenderFrames++;
     stats.frameRenderTimeMs = renderTimeMs;
     this->stats.updateStatistics();
+}
+
+std::vector<Triangle> Renderer::clipTriangle(Triangle tri)
+{
+    std::vector<Triangle> clippedTris;
+
+    // Check against 6 clipping planes
+    
+    return clippedTris;
 }
 
 const Stats& Renderer::getStatistics() const
