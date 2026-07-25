@@ -17,7 +17,7 @@ private:
         addScene(std::move(scene));
         setActiveScene(std::string("main"));
 
-        std::unique_ptr<Object3D> obj = std::make_unique<Object3D>("res/VideoShip.obj", "ship");
+        std::unique_ptr<Object3D> obj = std::make_unique<Object3D>("res/axis.obj", "axis");
 
         Scene *activeScene = getActiveScene();
         activeScene->addObject(std::move(obj));
@@ -25,36 +25,42 @@ private:
 
     void _process(Scene *activeScene) override
     {
-        Object3D *obj = activeScene->getObject("ship");
-        obj->rotateObject(0.55, 0, 0.30);
+        Object3D *obj = activeScene->getObject("axis");
+        //obj->rotateObject(0.55, 0, 0.30);
     }
 
     void _keyPressed(Keycode key, Scene *activeScene) override
     {
         switch(key)
         {
-            case PG_W:
-                activeScene->moveCamera(0, 0, -1);
-                break; 
-            case PG_S:
+            case PG_UP:
                 activeScene->moveCamera(0, 0, 1);
                 break; 
-            case PG_A:
-                activeScene->moveCamera(-1, 0, 0);
-                break;
-            case PG_D:
-                activeScene->moveCamera(1, 0, 0);
-                break;
-            case PG_UP:
-                activeScene->rotateCameraX(0.15);
-                break; 
             case PG_DOWN:
-                activeScene->rotateCameraX(-0.15);
+                activeScene->moveCamera(0, 0, -1);
                 break; 
             case PG_LEFT:
+                activeScene->moveCamera(-1, 0, 0);
+                break;
+            case PG_RIGHT:
+                activeScene->moveCamera(1, 0, 0);
+                break;
+            case PG_R:
+                activeScene->moveCamera(0, 1, 0);
+                break;
+            case PG_F:
+                activeScene->moveCamera(0, -1, 0);
+                break;
+            case PG_W:
+                activeScene->rotateCameraX(0.15);
+                break; 
+            case PG_S:
+                activeScene->rotateCameraX(-0.15);
+                break; 
+            case PG_A:
                 activeScene->rotateCameraY(0.15);
                 break; 
-            case PG_RIGHT:
+            case PG_D:
                 activeScene->rotateCameraY(-0.15);
                 break;
         }
