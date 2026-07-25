@@ -80,9 +80,15 @@ void Camera::setPosition(float x, float y, float z)
 
 void Camera::move(float dx, float dy, float dz)
 {
-    cameraPosition.x+= dx * cameraSpeed;
-    cameraPosition.y+= dy * cameraSpeed;
-    cameraPosition.z+= dz * cameraSpeed;
+    Vec4 movement; 
+    movement.x = right.x * dx + up.x * dy + forward.x * dz;
+    movement.y = right.y * dx + up.y * dy + forward.y * dz;
+    movement.z = right.z * dx + up.z * dy + forward.z * dz;
+    movement.w = 0.0f;
+
+    cameraPosition.x+= movement.x * cameraSpeed;
+    cameraPosition.y+= movement.y * cameraSpeed;
+    cameraPosition.z+= movement.z * cameraSpeed;
 
     cameraTransformation = Transform::cameraTransform(cameraPosition, right, up, forward);
 }
